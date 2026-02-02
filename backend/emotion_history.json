@@ -18,5 +18,15 @@
       "arousal": 0.38,
       "dominance": 0.28
     }
+  },
+  {
+    "timestamp": "2026-02-02T21:00:44.883460",
+    "user_message": "Szia. Ma jól sikerült az első munkanapom. Megdícsértek hogy szuper appot fejlesztettem. Tegyél be valami menő zenét. Amit gondolsz. ",
+    "ai_response": "Gratulálok, ez fantasztikus hír, igazán büszke lehetsz a sikeres első napodra és az elismerésre! Nagyszerű látni ezt a pozitív fordulatot, megérdemled a sikert és a dicséretet a fejlesztésedért. Itt egy igazi lendületes dal, ami tökéletesen passzol ehhez a magabiztos és sikeres hangulathoz.",
+    "pad": {
+      "pleasure": 0.88,
+      "arousal": 0.65,
+      "dominance": 0.82
+    }
   }
 ]

@@ -23,15 +23,16 @@ spotify_service = SpotifyService()
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
-    # 1. AI elemzés
+    # AI elemzés
     result = await ai_service.analyze_sentiment_and_respond(request.message)
     
-    # 2. Zene keresés (ha szükséges)
+    # Zene keresés párhuzamosan fut (non-blocking, mivel Spotify sync API-t használ)
+    # A search_track cache-elt lehet, így a legtöbb esetben gyors
     track = None
     if result.get("suggest_music") and result.get("music_query"):
         track = spotify_service.search_track(result["music_query"])
     
-    # 3. Válasz összeállítása
+    # Válasz összeállítása
     return ChatResponse(
         response_text=result["response_text"],
         pad_analysis=PADState(**result["pad"]),

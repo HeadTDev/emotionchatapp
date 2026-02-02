@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Send, User, Activity } from 'lucide-react';
 import type { Message } from '../../types';
 
@@ -8,18 +8,38 @@ interface Props {
   onSendMessage: (msg: string) => void;
 }
 
+// Debounce utility
+function useDebounce<T extends (...args: any[]) => void>(
+  callback: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    },
+    [callback, delay]
+  );
+}
+
 export const ChatArea: React.FC<Props> = ({ messages, isLoading, onSendMessage }) => {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
-  const handleSend = () => {
+  const handleSend = useCallback(() => {
     if (input.trim()) {
       onSendMessage(input);
       setInput('');
     }
-  };
+  }, [input, onSendMessage]);
 
   return (
     <div className="flex flex-col h-full">

@@ -1,11 +1,14 @@
 import os
 import json
+import asyncio
 from datetime import datetime
 from google import genai
 from google.genai import types
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from models import PADState, TrackInfo
+import aiofiles
+from cachetools import TTLCache
 
 HISTORY_FILE = "emotion_history.json"
 
@@ -18,19 +21,20 @@ class AIService:
         self.client = genai.Client(api_key=self.api_key)
         self.model_id = "gemini-3-flash-preview"
 
-    def _get_history(self) -> list:
-        """Betölti az utolsó 5 interakciót a JSON fájlból."""
+    async def _get_history(self) -> list:
+        """Betölti az utolsó 5 interakciót a JSON fájlból (async)."""
         if os.path.exists(HISTORY_FILE):
             try:
-                with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                    return json.load(f)
+                async with aiofiles.open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                    content = await f.read()
+                    return json.loads(content)
             except Exception:
                 return []
         return []
 
-    def _save_to_history(self, user_msg: str, ai_data: dict):
-        """Elmenti az aktuális interakciót és limitálja a hosszt 5-re."""
-        history = self._get_history()
+    async def _save_to_history(self, user_msg: str, ai_data: dict):
+        """Elmenti az aktuális interakciót és limitálja a hosszt 5-re (async)."""
+        history = await self._get_history()
         new_entry = {
             "timestamp": datetime.now().isoformat(),
             "user_message": user_msg,
@@ -39,11 +43,11 @@ class AIService:
         }
         history.append(new_entry)
         # Csak az utolsó 5-öt tartjuk meg
-        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-            json.dump(history[-5:], f, ensure_ascii=False, indent=2)
+        async with aiofiles.open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            await f.write(json.dumps(history[-5:], ensure_ascii=False, indent=2))
 
     async def analyze_sentiment_and_respond(self, message: str) -> dict: 
-        history = self._get_history()
+        history = await self._get_history()
         history_context = json.dumps(history, ensure_ascii=False)
 
         prompt = f"""
@@ -98,8 +102,8 @@ class AIService:
             if response.text:
                 data = json.loads(response.text)
                 if isinstance(data, dict):
-                    # Mentés az előzményekbe a sikeres válasz után
-                    self._save_to_history(message, data)
+                    # Mentés az előzményekbe a sikeres válasz után (async, nem blokkoljuk a választ)
+                    asyncio.create_task(self._save_to_history(message, data))
                     return data
                 else:
                     raise Exception("Az AI válasza nem érvényes JSON objektum.")
@@ -119,6 +123,8 @@ class SpotifyService:
         self.client_id = os.getenv("SPOTIFY_CLIENT_ID")
         self.client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
         self.sp = None
+        # In-memory cache: 100 items, 1 hour TTL
+        self._cache = TTLCache(maxsize=100, ttl=3600)
         
         if self.client_id and self.client_secret:
             try:
@@ -132,7 +138,12 @@ class SpotifyService:
                 print(f"Spotify Auth Error: {e}")
 
     def search_track(self, query: str) -> TrackInfo:
-        print(f"Spotify Searching for: {query}")
+        # Check cache first
+        if query in self._cache:
+            print(f"Spotify Cache HIT for: {query}")
+            return self._cache[query]
+        
+        print(f"Spotify Cache MISS, searching for: {query}")
         
         if self.sp and query:
             try:
@@ -143,14 +154,19 @@ class SpotifyService:
                     
                     if items:
                         track = items[0]
-                        return TrackInfo(
+                        track_info = TrackInfo(
                             id=track['id'],
                             title=track['name'],
                             artist=track['artists'][0]['name'],
                             album_art=track['album']['images'][0]['url'] if track['album']['images'] else ""
                         )
+                        # Cache the result
+                        self._cache[query] = track_info
+                        return track_info
             except Exception as e:
                 print(f"Spotify API hiba a keresés során: {e}")
 
         # Alapértelmezett fallback, ha nincs találat vagy nincs konfigurálva az API
-        return TrackInfo(id="0", title="Lo-Fi Beats", artist="Chill Cow", album_art="https://placehold.co/300/4444ff/fff?text=Music")
+        fallback = TrackInfo(id="0", title="Lo-Fi Beats", artist="Chill Cow", album_art="https://placehold.co/300/4444ff/fff?text=Music")
+        self._cache[query] = fallback
+        return fallback

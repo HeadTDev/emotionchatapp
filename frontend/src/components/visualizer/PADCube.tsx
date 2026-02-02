@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { PADState } from '../../types';
 
 interface Props {
   pad: PADState;
 }
 
-export const PADCube: React.FC<Props> = ({ pad }) => {
+export const PADCube: React.FC<Props> = React.memo(({ pad }) => {
   
   // --- KONFIGURÁCIÓ (ITT ÁLLÍTSD A MÉRETEKET) ---
   const CONFIG = {
@@ -87,11 +87,17 @@ export const PADCube: React.FC<Props> = ({ pad }) => {
     };
   };
 
-  const moodInfo = getMoodInfo(pad.pleasure, pad.arousal, pad.dominance);
+  const moodInfo = useMemo(() => getMoodInfo(pad.pleasure, pad.arousal, pad.dominance), [
+    pad.pleasure,
+    pad.arousal,
+    pad.dominance
+  ]);
   const { r, g, b } = moodInfo.color;
 
-  const color = `rgba(${r}, ${g}, ${b}, 0.1)`; // Szinte teljesen átlátszó belső
-  const borderColor = `rgba(${r}, ${g}, ${b}, 0.8)`; // Erős élek a wireframe hatáshoz
+  const { color, borderColor } = useMemo(() => ({
+    color: `rgba(${r}, ${g}, ${b}, 0.1)`,
+    borderColor: `rgba(${r}, ${g}, ${b}, 0.8)`
+  }), [r, g, b]);
 
   return (
     <div 
@@ -213,4 +219,4 @@ export const PADCube: React.FC<Props> = ({ pad }) => {
       </div>
     </div>
   );
-};
+});
