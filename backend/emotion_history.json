@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2026-01-29T16:05:24.300032",
+    "user_message": "Szia, Kicsit rosszul sikerült a tegnapi projekt, elcsesztem. Nem valami jó érzés volt. ",
+    "ai_response": "Sajnálom, hogy így alakult a projekt, teljesen érthető, hogy most csalódottnak és feszültnek érzed magad. Ne feledd, hogy egy-egy hiba nem határozza meg a teljes szakmai hozzáértésedet, inkább a fejlődés része. Próbálj meg ma kicsit kíméletesebb lenni magaddal, és engedd meg magadnak a pihenést.",
+    "pad": {
+      "pleasure": -0.45,
+      "arousal": -0.15,
+      "dominance": -0.4
+    }
+  },
+  {
+    "timestamp": "2026-01-29T16:07:08.335194",
+    "user_message": "Ez jó zene, tetszik. De volt jó hír is. Született egy kiskutya a jelenlegi kutyámnak. ",
+    "ai_response": "Gratulálok a kiskutyához, ez igazán felemelő és örömteli hír a tegnapi nehézségek után! Az új élet érkezése mindig különleges energiát ad, és segít kicsit kiszakadni a hétköznapi gondokból. Élvezd ki ezt a tiszta boldogságot és a zene megnyugtató hatását, most ez a legfontosabb.",
+    "pad": {
+      "pleasure": 0.62,
+      "arousal": 0.38,
+      "dominance": 0.28
+    }
+  }
+]
