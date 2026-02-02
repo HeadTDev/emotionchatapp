@@ -11,6 +11,7 @@ export interface Message {
 }
 
 export interface Track {
+  id: string;
   title: string;
   artist: string;
   albumArt: string;
@@ -21,6 +22,7 @@ export interface ApiResponse {
   response_text: string;
   pad_analysis: PADState;
   suggested_track: {
+    id: string;
     title: string;
     artist: string;
     album_art: string;

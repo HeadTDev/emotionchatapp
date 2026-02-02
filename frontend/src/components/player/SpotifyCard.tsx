@@ -1,95 +1,159 @@
-import React from 'react';
-import { Play, Pause, Activity, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Music, ChevronUp } from 'lucide-react';
 import type { Track } from '../../types';
+
+declare global {
+  interface Window {
+    Spotify?: {
+      embed?: {
+        resizeObserver?: {
+          disconnect?: () => void;
+        };
+      };
+      Player?: {
+        prototype?: {
+          constructor?: any;
+        };
+        createObserveHandler?: () => void;
+      };
+    };
+  }
+}
 
 interface Props {
   track: Track;
 }
 
-export const SpotifyCard: React.FC<Props> = ({ track }) => {
-  // --- KONFIGURÁCIÓ (MÉRETEK PIXELBEN) ---
-  const CONFIG = {
-    cardHeight: 480,       // Kártya fix magassága (Megnövelve)
-    cardPadding: 20,       // Kártya belső margója
-    contentGap: 16,        // Elemek közötti távolság (ÚJ)
-    borderRadius: 24,      // Kártya lekerekítése
-    playButtonSize: 56,    // Lejátszás gomb mérete
-    controlIconSize: 24,   // Vezérlő ikonok mérete
-    overlayIconSize: 48,   // Borítón lévő ikon mérete
+export const SpotifyCard: React.FC<Props> = React.memo(({ track }) => {
+  const [isEmbedReady, setIsEmbedReady] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const [showPlayPrompt, setShowPlayPrompt] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
+
+  // Load Spotify Embed script once on mount
+  useEffect(() => {
+    if (!window.Spotify && !document.querySelector('script[src*="spotify-player"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      script.async = true;
+      script.onload = () => {
+        setIsEmbedReady(true);
+        // Reload embeds after script loads
+        if (window.Spotify?.Player?.prototype?.constructor) {
+          window.Spotify.embed?.resizeObserver?.disconnect?.();
+          setTimeout(() => {
+            window.Spotify?.Player?.createObserveHandler?.();
+          }, 100);
+        }
+      };
+      document.body.appendChild(script);
+    } else {
+      setIsEmbedReady(true);
+    }
+  }, []);
+
+  // Handle user interaction for autoplay
+  useEffect(() => {
+    if (!hasUserInteracted) {
+      setShowPlayPrompt(true);
+      const timer = setTimeout(() => {
+        setShowPlayPrompt(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasUserInteracted, track.id]);
+
+  const handlePlayClick = () => {
+    setHasUserInteracted(true);
+    setShowPlayPrompt(false);
   };
+
+  if (!track.id) {
+    return (
+      <div 
+        className="mt-auto bg-zinc-900/50 backdrop-blur-md border border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center shadow-lg"
+        style={{ height: '280px' }}
+      >
+        <Music className="w-10 h-10 text-zinc-600 mb-3" />
+        <p className="text-zinc-400 text-center text-xs">Írj egy üzenetet</p>
+      </div>
+    );
+  }
 
   return (
     <div 
-      className="mt-auto bg-zinc-900/60 backdrop-blur-xl border border-zinc-800/50 flex flex-col shadow-2xl"
+      ref={containerRef}
+      className="mt-auto bg-zinc-900/50 backdrop-blur-md border border-zinc-800 rounded-xl overflow-hidden shadow-lg group"
       style={{ 
-        height: `${CONFIG.cardHeight}px`,
-        padding: `${CONFIG.cardPadding}px`, 
-        borderRadius: `${CONFIG.borderRadius}px`,
-        gap: `${CONFIG.contentGap}px`
+        height: '400px'
       }}
     >
-       {/* Fejléc: Ikon + Cím */}
-       <div className="flex items-center justify-between text-zinc-400 shrink-0">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
-             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-             Most Szól
-          </div>
-          <Volume2 className="w-4 h-4" />
-       </div>
-
-       {/* Album Art - Nagyobb és szebb */}
-       <div 
-         className="relative group w-full flex-1 min-h-0 overflow-hidden shadow-lg border border-zinc-800"
-         style={{ borderRadius: `${CONFIG.borderRadius - 8}px` }}
-       >
+      {/* Minimal background */}
+      <div className="h-full flex flex-col">
+        
+        {/* Album Art - Top Section */}
+        <div className="h-52 overflow-hidden relative group/image">
           <img 
-            src={track.albumArt} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-            alt="Album Art" 
+            src={track.albumArt}
+            alt={track.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover/image:scale-105"
           />
-          
-          {/* Overlay a play/pause indikátorral */}
-          <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${track.isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
-             {track.isPlaying ? (
-                <Activity style={{ width: CONFIG.overlayIconSize, height: CONFIG.overlayIconSize }} className="text-white animate-pulse" />
-             ) : (
-                <Play style={{ width: CONFIG.overlayIconSize, height: CONFIG.overlayIconSize }} className="text-white fill-current opacity-80" />
-             )}
-          </div>
-       </div>
+          {/* Subtle overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/30" />
+        </div>
 
-       {/* Track Info */}
-       <div className="text-center space-y-1 shrink-0">
-          <h3 className="text-lg font-bold text-white truncate px-2">{track.title}</h3>
-          <p className="text-sm text-zinc-400 truncate px-4">{track.artist}</p>
-       </div>
+        {/* Track Info - Middle Section */}
+        <div className="px-4 py-3 flex-shrink-0">
+          <h3 className="text-sm font-semibold text-white truncate">{track.title}</h3>
+          <p className="text-xs text-zinc-400 truncate">{track.artist}</p>
+        </div>
 
-       {/* Fake Progress Bar */}
-       <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden shrink-0">
-         <div className={`h-full bg-green-500 rounded-full ${track.isPlaying ? 'w-1/3 animate-pulse' : 'w-0'}`}></div>
-       </div>
+        {/* Spotify Embed Container - Bottom */}
+        <div 
+          ref={iframeContainerRef}
+          className="relative flex-1 min-h-0 bg-zinc-800/30 border-t border-zinc-800 overflow-hidden"
+        >
+          {/* Embed iframe */}
+          {isEmbedReady && track.id && (
+            <iframe
+              key={track.id}
+              src={`https://open.spotify.com/embed/track/${track.id}?utm_source=emotionplayer&theme=0`}
+              width="100%"
+              height="100%"
+              allowFullScreen={false}
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="absolute inset-0"
+              style={{
+                border: 'none'
+              }}
+            />
+          )}
 
-       {/* Controls (Teljes vezérlősor) */}
-       <div className="flex items-center justify-center gap-6 pt-2 shrink-0">
-          <button className="text-zinc-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
-             <SkipBack style={{ width: CONFIG.controlIconSize, height: CONFIG.controlIconSize }} className="fill-current" />
-          </button>
-          
-          <button 
-            className="rounded-full bg-white text-black flex items-center justify-center hover:scale-105 hover:bg-green-400 transition-all shadow-lg shadow-green-500/20"
-            style={{ width: CONFIG.playButtonSize, height: CONFIG.playButtonSize }}
-          >
-             {track.isPlaying ? (
-                <Pause style={{ width: CONFIG.controlIconSize, height: CONFIG.controlIconSize }} className="fill-current" />
-             ) : (
-                <Play style={{ width: CONFIG.controlIconSize, height: CONFIG.controlIconSize }} className="fill-current ml-1" />
-             )}
-          </button>
-          
-          <button className="text-zinc-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full">
-             <SkipForward style={{ width: CONFIG.controlIconSize, height: CONFIG.controlIconSize }} className="fill-current" />
-          </button>
-       </div>
+          {/* User interaction overlay for autoplay */}
+          {!hasUserInteracted && showPlayPrompt && (
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+              <div className="text-center">
+                <ChevronUp className="w-5 h-5 text-white animate-bounce mx-auto mb-1" />
+                <p className="text-white font-medium text-xs">Kattints indításhoz</p>
+              </div>
+            </div>
+          )}
+
+          {/* Hover interaction prompt */}
+          {!hasUserInteracted && !showPlayPrompt && (
+            <button
+              onClick={handlePlayClick}
+              className="absolute inset-0 bg-black/20 hover:bg-black/30 flex items-center justify-center transition-colors opacity-0 hover:opacity-100"
+            >
+              <Music className="w-6 h-6 text-green-400" />
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
-};
+});
+
+SpotifyCard.displayName = 'SpotifyCard';

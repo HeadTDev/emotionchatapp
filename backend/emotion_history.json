@@ -1,32 +1,52 @@
 [
   {
-    "timestamp": "2026-01-29T16:05:24.300032",
-    "user_message": "Szia, Kicsit rosszul sikerült a tegnapi projekt, elcsesztem. Nem valami jó érzés volt. ",
-    "ai_response": "Sajnálom, hogy így alakult a projekt, teljesen érthető, hogy most csalódottnak és feszültnek érzed magad. Ne feledd, hogy egy-egy hiba nem határozza meg a teljes szakmai hozzáértésedet, inkább a fejlődés része. Próbálj meg ma kicsit kíméletesebb lenni magaddal, és engedd meg magadnak a pihenést.",
+    "timestamp": "2026-02-02T21:26:32.685001",
+    "user_message": "Ez emlékeztet egy régi szakításomra. Anno nagyon ki voltam tőle. Azért már kicsit jobb a helyzet, de sokszor vagyok miatta depis kicsit. :( ",
+    "ai_response": "Sajnálom, hogy ezek a fájdalmas emlékek most felszínre törtek, de ne feledd, hogy a gyógyulás nem egy egyenes vonal. Természetes, hogy néha még megérint a múlt, de a mostani tudatosságod segít majd átvészelni ezt a hullámvölgyet is. Itt egy dal, ami segít kicsit elidőzni ezekben az érzésekben, majd finoman elengedni őket.",
     "pad": {
-      "pleasure": -0.45,
-      "arousal": -0.15,
-      "dominance": -0.4
+      "pleasure": -0.38,
+      "arousal": -0.25,
+      "dominance": -0.15
     }
   },
   {
-    "timestamp": "2026-01-29T16:07:08.335194",
-    "user_message": "Ez jó zene, tetszik. De volt jó hír is. Született egy kiskutya a jelenlegi kutyámnak. ",
-    "ai_response": "Gratulálok a kiskutyához, ez igazán felemelő és örömteli hír a tegnapi nehézségek után! Az új élet érkezése mindig különleges energiát ad, és segít kicsit kiszakadni a hétköznapi gondokból. Élvezd ki ezt a tiszta boldogságot és a zene megnyugtató hatását, most ez a legfontosabb.",
+    "timestamp": "2026-02-02T21:27:13.085097",
+    "user_message": "Na hadd hallgassam, mi az a zene? ",
+    "ai_response": "Örülök, hogy készen állsz a befogadásra, ez a fajta nyitottság sokat segít a belső egyensúlyod visszaállításában. Ez a dal lehetőséget ad, hogy átéld a pillanatnyi melankóliát, de közben finoman meg is nyugtat. Hallgasd meg, és engedd, hogy a dallamok segítsenek a belső feszültség oldásában.",
     "pad": {
-      "pleasure": 0.62,
-      "arousal": 0.38,
-      "dominance": 0.28
+      "pleasure": -0.15,
+      "arousal": -0.05,
+      "dominance": 0.05
     }
   },
   {
-    "timestamp": "2026-02-02T21:00:44.883460",
-    "user_message": "Szia. Ma jól sikerült az első munkanapom. Megdícsértek hogy szuper appot fejlesztettem. Tegyél be valami menő zenét. Amit gondolsz. ",
-    "ai_response": "Gratulálok, ez fantasztikus hír, igazán büszke lehetsz a sikeres első napodra és az elismerésre! Nagyszerű látni ezt a pozitív fordulatot, megérdemled a sikert és a dicséretet a fejlesztésedért. Itt egy igazi lendületes dal, ami tökéletesen passzol ehhez a magabiztos és sikeres hangulathoz.",
+    "timestamp": "2026-02-02T21:28:14.815128",
+    "user_message": "Amúgy kéépzeld. tegnap láttam a Fast & Furious filmeket. Nagyon tetszett. Imádom az autókat. Igazi erő, jó hangulat, nyár. Alig várom már, hogy megint nyár legyen és meleg. ",
+    "ai_response": "Nagyszerű látni ezt a hirtelen jött lelkesedést és erőt, az autók és a nyár ígérete láthatóan teljesen feltöltött! Ez a fajta dinamika és magabiztosság remekül segít abban, hogy magad mögött hagyd a borongósabb emlékeket. Engedd, hogy ez a forró, nyári energia most teljesen átjárja a napodat és tovább vigye ezt a lendületet.",
     "pad": {
-      "pleasure": 0.88,
-      "arousal": 0.65,
-      "dominance": 0.82
+      "pleasure": 0.68,
+      "arousal": 0.55,
+      "dominance": 0.62
+    }
+  },
+  {
+    "timestamp": "2026-02-02T21:29:16.265855",
+    "user_message": "Valami filmzenét ajánlj most a Fast & Furious 6-ból. Abban a részben vannak a legjobb zenék. ",
+    "ai_response": "Nagyszerű választás, a hatodik rész zenéi valóban tele vannak erővel és adrenalinnal. Ez a határozottság és lelkesedés, amit most érzel, tökéletesen passzol a film pörgős világához. Élvezd ezt a magabiztos energiát, ami most hajt előre!",
+    "pad": {
+      "pleasure": 0.76,
+      "arousal": 0.68,
+      "dominance": 0.72
+    }
+  },
+  {
+    "timestamp": "2026-02-02T21:31:07.791683",
+    "user_message": "Szia. Sajnos az egyik barátom elkezdett drogozni. Nem tudom, hogyan rángathatnám ki ebből az állapotból. Nincs valami jó tanácsod mit tehetnék? ",
+    "ai_response": "Nagyon sajnálom, hogy ezzel kell szembenézned; az aggodalmad és a tehetetlenség érzése teljesen természetes egy ilyen súlyos helyzetben. Fontos tudatosítanod, hogy egyedül nem tudod ezt megoldani, a legfontosabb most a támogatásod és a szakember bevonása a barátod számára. Ez a dal segíthet abban, hogy egy kicsit lecsendesítsd a belső feszültségedet, és megtaláld a szükséges belső nyugalmat a továbblépéshez.",
+    "pad": {
+      "pleasure": -0.48,
+      "arousal": 0.32,
+      "dominance": -0.55
     }
   }
 ]

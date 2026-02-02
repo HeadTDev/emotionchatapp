@@ -158,7 +158,8 @@ class SpotifyService:
                             id=track['id'],
                             title=track['name'],
                             artist=track['artists'][0]['name'],
-                            album_art=track['album']['images'][0]['url'] if track['album']['images'] else ""
+                            album_art=track['album']['images'][0]['url'] if track['album']['images'] else "",
+                            preview_url=track.get('preview_url')  # 30-second preview URL
                         )
                         # Cache the result
                         self._cache[query] = track_info

@@ -25,6 +25,7 @@ const initialState: ChatState = {
   isLoading: false,
   padState: { pleasure: 0.1, arousal: 0.1, dominance: 0.1 },
   currentTrack: {
+    id: "",
     title: "Várakozás...",
     artist: "Spotify API",
     albumArt: "https://placehold.co/100/222/fff?text=Music",
@@ -87,6 +88,7 @@ export const useChat = () => {
       };
 
       const track = data.suggested_track ? {
+        id: data.suggested_track.id || "",
         title: data.suggested_track.title,
         artist: data.suggested_track.artist,
         albumArt: data.suggested_track.album_art,
