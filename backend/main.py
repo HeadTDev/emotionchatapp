@@ -8,7 +8,6 @@ load_dotenv()
 
 app = FastAPI(title="AI Emotion Player API")
 
-# CORS beállítás (Frontend kommunikációhoz)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -17,22 +16,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Service példányosítás
 ai_service = AIService()
 spotify_service = SpotifyService()
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
-    # AI elemzés
     result = await ai_service.analyze_sentiment_and_respond(request.message)
     
-    # Zene keresés párhuzamosan fut (non-blocking, mivel Spotify sync API-t használ)
-    # A search_track cache-elt lehet, így a legtöbb esetben gyors
     track = None
     if result.get("suggest_music") and result.get("music_query"):
         track = spotify_service.search_track(result["music_query"])
     
-    # Válasz összeállítása
     return ChatResponse(
         response_text=result["response_text"],
         pad_analysis=PADState(**result["pad"]),

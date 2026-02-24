@@ -13,7 +13,7 @@ class TrackInfo(BaseModel):
     title: str
     artist: str
     album_art: str
-    preview_url: Optional[str] = None  # 30-second preview for fallback
+    preview_url: Optional[str] = None
     is_playing: bool = True
 
 class ChatRequest(BaseModel):

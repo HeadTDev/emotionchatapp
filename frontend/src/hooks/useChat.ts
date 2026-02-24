@@ -2,7 +2,6 @@ import { useReducer, useCallback } from 'react';
 import type { Message, PADState, Track } from '../types';
 import { chatService } from '../services/api';
 
-// State type definition
 interface ChatState {
   messages: Message[];
   isLoading: boolean;
@@ -10,14 +9,12 @@ interface ChatState {
   currentTrack: Track;
 }
 
-// Action types
 type ChatAction =
   | { type: 'ADD_USER_MESSAGE'; payload: Message }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'UPDATE_AI_RESPONSE'; payload: { message: Message; padState: PADState; track?: Track } }
   | { type: 'ADD_ERROR_MESSAGE'; payload: string };
 
-// Initial state
 const initialState: ChatState = {
   messages: [
     { id: 'init', role: 'assistant', content: 'Szia! A Gemini API-val működöm. Írj valamit, és elemzem a hangulatod!' }
@@ -33,7 +30,6 @@ const initialState: ChatState = {
   }
 };
 
-// Reducer function - handles all state updates in one place
 const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
   switch (action.type) {
     case 'ADD_USER_MESSAGE':
@@ -72,15 +68,12 @@ export const useChat = () => {
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim()) return;
 
-    // Single dispatch for user message
     const userMsg: Message = { id: Date.now().toString(), role: 'user', content };
     dispatch({ type: 'ADD_USER_MESSAGE', payload: userMsg });
 
     try {
-      // API call
       const data = await chatService.sendMessage(content);
 
-      // Prepare AI response
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -95,7 +88,6 @@ export const useChat = () => {
         isPlaying: true
       } : undefined;
 
-      // Single dispatch for entire AI response (batched state update)
       dispatch({
         type: 'UPDATE_AI_RESPONSE',
         payload: { message: aiMsg, padState: data.pad_analysis, track }
