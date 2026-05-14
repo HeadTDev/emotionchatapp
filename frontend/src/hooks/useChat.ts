@@ -1,6 +1,7 @@
 import { useReducer, useCallback } from 'react';
 import type { Message, PADState, Track } from '../types';
 import { chatService } from '../services/api';
+import { getMoodInfo } from '../utils/mood';
 
 interface ChatState {
   messages: Message[];
@@ -32,12 +33,21 @@ const initialState: ChatState = {
 
 const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
   switch (action.type) {
-    case 'ADD_USER_MESSAGE':
+    case 'ADD_USER_MESSAGE': {
+      const staticMoodColor = getMoodInfo(state.padState).color;
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        messages: [
+          ...state.messages.map(msg => (
+            msg.role === 'user' && msg.isMoodDynamic
+              ? { ...msg, isMoodDynamic: false, moodColor: staticMoodColor }
+              : msg
+          )),
+          action.payload
+        ],
         isLoading: true
       };
+    }
     case 'SET_LOADING':
       return {
         ...state,
@@ -68,7 +78,13 @@ export const useChat = () => {
   const sendMessage = useCallback(async (content: string) => {
     if (!content.trim()) return;
 
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content };
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content,
+      moodColor: getMoodInfo(state.padState).color,
+      isMoodDynamic: true
+    };
     dispatch({ type: 'ADD_USER_MESSAGE', payload: userMsg });
 
     try {
@@ -97,7 +113,7 @@ export const useChat = () => {
       console.error("Chat Error:", error);
       dispatch({ type: 'ADD_ERROR_MESSAGE', payload: 'Hiba történt a szerver elérésekor.' });
     }
-  }, []);
+  }, [state.padState]);
 
   return {
     messages: state.messages,

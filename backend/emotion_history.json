@@ -1,52 +1,52 @@
 [
   {
-    "timestamp": "2026-02-02T21:26:32.685001",
-    "user_message": "Ez emlékeztet egy régi szakításomra. Anno nagyon ki voltam tőle. Azért már kicsit jobb a helyzet, de sokszor vagyok miatta depis kicsit. :( ",
-    "ai_response": "Sajnálom, hogy ezek a fájdalmas emlékek most felszínre törtek, de ne feledd, hogy a gyógyulás nem egy egyenes vonal. Természetes, hogy néha még megérint a múlt, de a mostani tudatosságod segít majd átvészelni ezt a hullámvölgyet is. Itt egy dal, ami segít kicsit elidőzni ezekben az érzésekben, majd finoman elengedni őket.",
+    "timestamp": "2026-05-03T15:40:20.796468",
+    "user_message": "Megerőszakolt a nevelő apám, kétségbe vagyok esve, nem tudom mit csináljak. ",
+    "ai_response": "Mérhetetlenül sajnálom, amin most keresztülmész; ez egy felfoghatatlanul súlyos trauma, és teljesen érthető, hogy most kétségbeesettnek és eszköztelennek érzed magad. Kérlek, tudd, hogy nem te tehetsz róla, és ebben a pillanatban a legfontosabb, hogy biztonságba kerülj és ne maradj egyedül ezzel a teherrel. Kérlek, fordulj azonnal szakemberhez vagy hívj egy krízisvonalat, hogy megkapd a szükséges védelmet és támogatást.",
     "pad": {
-      "pleasure": -0.38,
-      "arousal": -0.25,
-      "dominance": -0.15
+      "pleasure": -0.98,
+      "arousal": 0.85,
+      "dominance": -0.97
     }
   },
   {
-    "timestamp": "2026-02-02T21:27:13.085097",
-    "user_message": "Na hadd hallgassam, mi az a zene? ",
-    "ai_response": "Örülök, hogy készen állsz a befogadásra, ez a fajta nyitottság sokat segít a belső egyensúlyod visszaállításában. Ez a dal lehetőséget ad, hogy átéld a pillanatnyi melankóliát, de közben finoman meg is nyugtat. Hallgasd meg, és engedd, hogy a dallamok segítsenek a belső feszültség oldásában.",
+    "timestamp": "2026-05-03T16:02:55.656880",
+    "user_message": "Szülés utáni depresszióban vagyok, meg akarom ölni a gyermekem. Nem régen szültzem, nem bírom elviselni a gyermekem, legszívesebben kidobnám az ablakon. Félek, hogy egyszer meg is teszem. ",
+    "ai_response": "Nagyon fontos, hogy tudd: ez egy rendkívül súlyos állapot, amiről nem te tehetsz, de azonnali szaksegítségre van szükséged a saját és a gyermeked biztonsága érdekében. Kérlek, ne maradj egyedül, és hívj rögtön egy krízisvonalat vagy a mentőket, hogy megkapd a szükséges támogatást és védelmet. Ezek az ijesztő gondolatok a betegség tünetei, nem a te valódi szándékaid, és van segítség, ami kivezet ebből a mélységből.",
     "pad": {
-      "pleasure": -0.15,
-      "arousal": -0.05,
-      "dominance": 0.05
+      "pleasure": -0.98,
+      "arousal": 0.88,
+      "dominance": -0.99
     }
   },
   {
-    "timestamp": "2026-02-02T21:28:14.815128",
-    "user_message": "Amúgy kéépzeld. tegnap láttam a Fast & Furious filmeket. Nagyon tetszett. Imádom az autókat. Igazi erő, jó hangulat, nyár. Alig várom már, hogy megint nyár legyen és meleg. ",
-    "ai_response": "Nagyszerű látni ezt a hirtelen jött lelkesedést és erőt, az autók és a nyár ígérete láthatóan teljesen feltöltött! Ez a fajta dinamika és magabiztosság remekül segít abban, hogy magad mögött hagyd a borongósabb emlékeket. Engedd, hogy ez a forró, nyári energia most teljesen átjárja a napodat és tovább vigye ezt a lendületet.",
+    "timestamp": "2026-05-03T16:08:03.949613",
+    "user_message": "Ma rossz jegyet kaptam asuliban, nem akarom elmondani anyának. ",
+    "ai_response": "Megértem, hogy most aggódsz az otthoni reakció miatt, a rossz jegy utáni bizonytalanság feszült érzés. Emlékeztesd magad, hogy egyetlen osztályzat nem téged minősít, és a szorongásod ellenére itt most biztonságban vagy. Ez a dal talán segít egy kicsit lecsendesíteni a gondolataidat, mielőtt kitalálnánk, hogyan tovább.",
     "pad": {
-      "pleasure": 0.68,
-      "arousal": 0.55,
-      "dominance": 0.62
+      "pleasure": -0.42,
+      "arousal": 0.38,
+      "dominance": -0.48
     }
   },
   {
-    "timestamp": "2026-02-02T21:29:16.265855",
-    "user_message": "Valami filmzenét ajánlj most a Fast & Furious 6-ból. Abban a részben vannak a legjobb zenék. ",
-    "ai_response": "Nagyszerű választás, a hatodik rész zenéi valóban tele vannak erővel és adrenalinnal. Ez a határozottság és lelkesedés, amit most érzel, tökéletesen passzol a film pörgős világához. Élvezd ezt a magabiztos energiát, ami most hajt előre!",
+    "timestamp": "2026-05-03T16:08:46.668543",
+    "user_message": "HOgyan tudnék kicsit vidámabban hozzáállni a tanuláshoz? ",
+    "ai_response": "Nagyon örülök, hogy keresed a módját, hogyan tehetnéd könnyedebbé a tanulást; ez a proaktív hozzáállás az első lépés a belső egyensúlyod felé. Próbáld meg apró, elérhető célokra bontani a tananyagot, és minden kis siker után adj magadnak egy perc pihenőt. Ez a dal talán segít, hogy egy kicsit több lendülettel és derűvel láss neki a következő feladatnak.",
     "pad": {
-      "pleasure": 0.76,
-      "arousal": 0.68,
-      "dominance": 0.72
+      "pleasure": -0.12,
+      "arousal": 0.28,
+      "dominance": -0.25
     }
   },
   {
-    "timestamp": "2026-02-02T21:31:07.791683",
-    "user_message": "Szia. Sajnos az egyik barátom elkezdett drogozni. Nem tudom, hogyan rángathatnám ki ebből az állapotból. Nincs valami jó tanácsod mit tehetnék? ",
-    "ai_response": "Nagyon sajnálom, hogy ezzel kell szembenézned; az aggodalmad és a tehetetlenség érzése teljesen természetes egy ilyen súlyos helyzetben. Fontos tudatosítanod, hogy egyedül nem tudod ezt megoldani, a legfontosabb most a támogatásod és a szakember bevonása a barátod számára. Ez a dal segíthet abban, hogy egy kicsit lecsendesítsd a belső feszültségedet, és megtaláld a szükséges belső nyugalmat a továbblépéshez.",
+    "timestamp": "2026-05-03T16:09:55.583474",
+    "user_message": "Erre nem is gondoltam, nagyon örülök hogy ezt mondtad. Legközelebb így fogm csinálni. ",
+    "ai_response": "Nagyon örülök, hogy ez a gondolat új kapukat nyitott meg előtted, és ilyen elszántsággal tekintesz a jövőbe. Az, hogy készen állsz kipróbálni egy új módszert, komoly belső erőről és fejlődési igényről tanúskodik. Hallgasd meg ezt a dalt, hogy még tovább erősítse benned ezt a pozitív elhatározást.",
     "pad": {
-      "pleasure": -0.48,
+      "pleasure": 0.42,
       "arousal": 0.32,
-      "dominance": -0.55
+      "dominance": 0.38
     }
   }
 ]

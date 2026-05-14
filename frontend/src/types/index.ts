@@ -8,6 +8,12 @@ export interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  moodColor?: {
+    r: number;
+    g: number;
+    b: number;
+  };
+  isMoodDynamic?: boolean;
 }
 
 export interface Track {

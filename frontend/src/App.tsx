@@ -27,6 +27,7 @@ const App = () => {
         <ChatArea 
           messages={messages} 
           isLoading={isLoading} 
+          padState={padState}
           onSendMessage={sendMessage} 
         />
       </main>
